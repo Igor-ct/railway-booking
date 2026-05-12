@@ -1,8 +1,155 @@
-export const Home = () => {
-  return (
-    <div>
-      <h1>Головна сторінка</h1>
-      <p>Тут буде список потягів.</p>
-    </div>
-  );
-};
+.homeContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.searchSection {
+  background-color: var(--color-white);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.pageTitle {
+  font-size: 1.5rem;
+  color: var(--color-primary-dark);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.searchFormPlaceholder {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.inputGroup label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+}
+
+.inputGroup input {
+  padding: 12px;
+  border: 1px solid #D1D5DB;
+  border-radius: 8px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.inputGroup input:focus {
+  border-color: var(--color-primary);
+}
+
+.searchButton {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 14px;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  margin-top: 8px;
+  transition: background-color 0.2s;
+}
+
+.searchButton:hover {
+  background-color: var(--color-primary-dark);
+}
+
+.resultsSection {
+  background-color: var(--color-white);
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1); 
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  color: var(--color-primary-dark);
+  font-weight: 700;
+  border-bottom: 2px solid var(--color-gray-light); 
+  padding-bottom: 12px;
+}
+
+.trainsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.dummyCard {
+  background-color: var(--color-white);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--color-gray-light); 
+  border-left: 6px solid var(--color-primary); 
+  transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+  cursor: pointer;
+}
+
+.dummyCard:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 4px 12px rgba(29, 78, 216, 0.08); 
+  transform: translateY(-2px); 
+}
+
+.dummyHeader {
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+}
+
+.dummyRoute {
+  font-size: 1rem;
+  color: var(--color-gray-dark);
+  margin-bottom: 8px;
+}
+
+.dummyTime {
+  color: var(--color-gray);
+  font-size: 0.875rem;
+  display: inline-block;
+  background-color: var(--color-gray-light);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+@media (min-width: 768px) {
+  .pageTitle {
+    text-align: left;
+    font-size: 1.75rem;
+  }
+
+  .searchFormPlaceholder {
+    flex-direction: row;
+    align-items: flex-end;
+  }
+
+  .inputGroup {
+    flex: 1;
+  }
+
+  .searchButton {
+    margin-top: 0;
+    padding: 12px 32px;
+    height: 44px; 
+  }
+
+  .trainsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+  }
+}
