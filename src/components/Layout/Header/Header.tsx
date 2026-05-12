@@ -11,10 +11,9 @@ export const Header = () => {
             <line x1="3" y1="18" x2="21" y2="18"></line>
           </svg>
         </button>
-      </div>
-      
-      <div className={styles.logo}>
-        Railwood
+        <div className={styles.logo}>
+          Railwood
+        </div>
       </div>
 
       <div className={styles.rightSection}>
