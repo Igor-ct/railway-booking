@@ -2,7 +2,14 @@
   background-color: var(--color-gray-dark);
   color: var(--color-gray-light);
   text-align: center;
-  padding: 24px;
-  font-size: 0.875rem;
+  padding: 16px; 
+  font-size: 0.75rem; 
   margin-top: auto;
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding: 24px;
+    font-size: 0.875rem;
+  }
 }
