@@ -1,3 +1,5 @@
+import { TrainList } from '../../components/TrainList/TrainList';
+import { mockTrains } from '../../data/train';
 import styles from './Home.module.css';
 
 export const Home = () => {
@@ -26,18 +28,7 @@ export const Home = () => {
       <section className={styles.resultsSection}>
         <h2 className={styles.sectionTitle}>Доступні рейси</h2>
         
-        <div className={styles.trainsGrid}>
-          <div className={styles.dummyCard}>
-            <div className={styles.dummyHeader}>705К • Інтерсіті+</div>
-            <div className={styles.dummyRoute}>Київ ➔ Львів</div>
-            <div className={styles.dummyTime}>06:00 - 11:09</div>
-          </div>
-          <div className={styles.dummyCard}>
-            <div className={styles.dummyHeader}>091К • Нічний експрес</div>
-            <div className={styles.dummyRoute}>Київ ➔ Львів</div>
-            <div className={styles.dummyTime}>22:37 - 06:26</div>
-          </div>
-        </div>
+        <TrainList trains={mockTrains} />
       </section>
     </div>
   );
