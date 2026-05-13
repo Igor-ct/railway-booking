@@ -1,0 +1,118 @@
+.card {
+  background-color: var(--color-white);
+  border: 1px solid var(--color-gray-light);
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border-color: var(--color-primary);
+}
+
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--color-gray-light);
+  padding-bottom: 12px;
+}
+
+.trainNumber {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+}
+
+.trainType {
+  font-size: 0.875rem;
+  color: var(--color-gray);
+  background-color: var(--color-gray-light);
+  padding: 4px 8px;
+  border-radius: 4px;
+}
+
+.routeInfo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cityInfo {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.cityInfo:last-child {
+  text-align: right;
+}
+
+.time {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-gray-dark);
+}
+
+.city {
+  font-size: 1rem;
+  color: var(--color-gray);
+}
+
+.durationWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  padding: 0 16px;
+}
+
+.duration {
+  font-size: 0.75rem;
+  color: var(--color-gray);
+  margin-bottom: 4px;
+}
+
+.routeLine {
+  width: 100%;
+  height: 2px;
+  background-color: var(--color-gray-light);
+  position: relative;
+}
+
+.routeLine::before, .routeLine::after {
+  content: '';
+  position: absolute;
+  top: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--color-gray);
+}
+
+.routeLine::before { left: 0; }
+.routeLine::after { right: 0; }
+
+.cardFooter {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 12px;
+}
+
+.selectButton {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: 600;
+  font-size: 0.875rem;
+  transition: background-color 0.2s;
+}
+
+.selectButton:hover {
+  background-color: var(--color-primary-dark);
+}
