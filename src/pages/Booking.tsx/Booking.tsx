@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { generateTrainWagons } from '../../data/wagons';
 import { SeatMap } from '../../components/SeatMap/SeatMap'; 
 import type { Seat } from '../../types/booking';
+import { BookingForm } from '../../components/BookingForm/BookingForm';
 import styles from './Booking.module.css';
 
 interface BookingProps {
@@ -9,11 +10,14 @@ interface BookingProps {
   onClose: () => void;
 }
 
+type BookingStep = 'SELECT_SEATS' | 'CHECKOUT';
+
 export const Booking = ({ trainNumber, onClose }: BookingProps) => {
   const [wagons] = useState(() => generateTrainWagons(400));
   const [selectedWagon, setSelectedWagon] = useState(wagons[0]);
-  
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
+  
+  const [currentStep, setCurrentStep] = useState<BookingStep>('SELECT_SEATS');
 
   const handleToggleSeat = (seat: Seat) => {
     setSelectedSeats((prev) => {
@@ -31,51 +35,79 @@ export const Booking = ({ trainNumber, onClose }: BookingProps) => {
     setSelectedSeats([]); 
   };
 
+  const handleBookingSuccess = () => {
+    alert(`Успіх! Квитки відправлено на ваш email. Сума: ${totalPrice} грн.`);
+    onClose();
+  };
+
   return (
     <div className={styles.overlay}>
       <div className={styles.bookingContainer}>
         
         <div className={styles.header}>
-          <h2>Потяг {trainNumber}: Вибір місць</h2>
+          <h2>
+            Потяг {trainNumber}: {currentStep === 'SELECT_SEATS' ? 'Вибір місць' : 'Оформлення квитків'}
+          </h2>
           <button className={styles.closeButton} onClick={onClose}>✕ Закрити</button>
         </div>
 
         <div className={styles.content}>
-          <div className={styles.wagonSelectorPlaceholder}>
-            <h3>Виберіть вагон</h3>
-            <div className={styles.wagonTabs}>
-              {wagons.map(w => (
-                <button 
-                  key={w.id} 
-                  className={selectedWagon.id === w.id ? styles.activeTab : styles.tab}
-                  onClick={() => handleWagonChange(w)}
-                >
-                  Вагон {w.number} ({w.wagonClass})
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <h3>Виберіть місця (Вагон {selectedWagon.number})</h3>
-            <SeatMap 
-              wagon={selectedWagon} 
-              selectedSeats={selectedSeats} 
-              onToggleSeat={handleToggleSeat} 
-            />
-          </div>
-
-          {selectedSeats.length > 0 && (
-            <div className={styles.summaryPanel}>
-              <div className={styles.summaryInfo}>
-                <p>Обрано місць: <b>{selectedSeats.length}</b> (№ {selectedSeats.map(s => s.number).join(', ')})</p>
-                <h3>Загальна сума: <span className={styles.totalPrice}>{totalPrice} грн</span></h3>
+          
+          {currentStep === 'SELECT_SEATS' && (
+            <>
+              <div className={styles.wagonSelectorPlaceholder}>
+                <h3>Виберіть вагон</h3>
+                <div className={styles.wagonTabs}>
+                  {wagons.map(w => (
+                    <button 
+                      key={w.id} 
+                      className={selectedWagon.id === w.id ? styles.activeTab : styles.tab}
+                      onClick={() => handleWagonChange(w)}
+                    >
+                      Вагон {w.number} ({w.wagonClass})
+                    </button>
+                  ))}
+                </div>
               </div>
-              <button className={styles.continueButton}>
-                Перейти до оформлення
-              </button>
+
+              <div>
+                <h3>Виберіть місця (Вагон {selectedWagon.number})</h3>
+                <SeatMap 
+                  wagon={selectedWagon} 
+                  selectedSeats={selectedSeats} 
+                  onToggleSeat={handleToggleSeat} 
+                />
+              </div>
+
+              {selectedSeats.length > 0 && (
+                <div className={styles.summaryPanel}>
+                  <div className={styles.summaryInfo}>
+                    <p>Обрано місць: <b>{selectedSeats.length}</b> (№ {selectedSeats.map(s => s.number).join(', ')})</p>
+                    <h3>Загальна сума: <span className={styles.totalPrice}>{totalPrice} грн</span></h3>
+                  </div>
+                  <button 
+                    className={styles.continueButton}
+                    onClick={() => setCurrentStep('CHECKOUT')}
+                  >
+                    Перейти до оформлення
+                  </button>
+                </div>
+              )}
+            </>
+          )}
+
+          {currentStep === 'CHECKOUT' && (
+            <div className={styles.checkoutWrapper}>
+              <h3> Введіть ваші дані</h3>
+              <BookingForm 
+                selectedSeats={selectedSeats}
+                totalPrice={totalPrice}
+                onCancel={() => setCurrentStep('SELECT_SEATS')} // Повертає назад до місць
+                onSubmitSuccess={handleBookingSuccess} // Викликає фінальний успіх
+              />
             </div>
           )}
+
         </div>
       </div>
     </div>
