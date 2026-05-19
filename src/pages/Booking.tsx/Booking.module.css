@@ -89,3 +89,31 @@
   gap: 10px;
   margin-top: 15px;
 }
+
+.summaryPanel {
+  margin-top: auto; 
+  background: #F3F4F6;
+  padding: 20px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-left: 6px solid var(--color-primary);
+}
+
+.summaryInfo p { margin: 0 0 4px 0; color: var(--color-gray-dark); }
+.summaryInfo h3 { margin: 0; color: #111827; }
+.totalPrice { color: var(--color-primary); font-size: 1.5rem; }
+
+.continueButton {
+  background: var(--color-primary);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  border-radius: 8px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.continueButton:hover { background: var(--color-primary-dark); }

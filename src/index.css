@@ -7,6 +7,15 @@
   --color-gray: #9CA3AF;
   --color-gray-dark: #374151;
   --color-cream: #FFF1D0;
+  --color-seat-standard: #93C5FD;
+  --color-seat-standard-text: #1E3A8A;
+  --color-seat-window: #C084FC;     
+  --color-seat-window-text: #581C87;
+  --color-seat-toilet: #FDBA74;     
+  --color-seat-toilet-text: #9A3412;
+  --color-seat-exit: #6EE7B7;       
+  --color-seat-exit-text: #064E3B;
+  --color-seat-occupied: #E5E7EB;
   --header-height: 64px;
 }
 
