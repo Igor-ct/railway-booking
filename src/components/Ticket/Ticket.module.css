@@ -1,0 +1,154 @@
+.ticketWrapper {
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  background: var(--color-light-blue);
+  border-radius: 16px;
+}
+
+.ticket {
+  display: flex;
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 600px;
+  position: relative;
+  flex-direction: row; 
+}
+
+.ticket::before, .ticket::after {
+  content: '';
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: var(--color-light-blue); 
+  border-radius: 50%;
+  right: 200px;
+  transform: translateX(50%);
+  z-index: 2;
+}
+
+.ticket::before { top: -15px; }
+.ticket::after { bottom: -15px; }
+
+.mainPart {
+  flex: 1;
+  padding: 24px;
+  border-right: 2px dashed #CBD5E1; 
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 12px;
+  margin-bottom: 20px;
+  gap: 12px; 
+}
+
+.trainBrand { 
+  font-weight: 800; 
+  color: var(--color-primary); 
+  letter-spacing: 1px; 
+}
+.ticketId { 
+  color: var(--color-gray); 
+  font-family: monospace; 
+}
+
+.passengerInfo {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  gap: 12px;
+  flex-wrap: wrap; 
+}
+
+.block { display: flex; flex-direction: column; gap: 4px; }
+.label { font-size: 0.75rem; text-transform: uppercase; color: var(--color-gray-dark); font-weight: 600; }
+.value { font-size: 1.1rem; font-weight: 700; color: #0F172A; }
+
+.seatsInfo { display: flex; flex-direction: column; gap: 8px; }
+.seatBadges { display: flex; flex-wrap: wrap; gap: 8px; }
+.seatBadge {
+  background: #F1F5F9;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border: 1px solid #E2E8F0;
+}
+
+.stubPart {
+  width: 200px;
+  background: #F8FAFC;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.stubInfo { display: flex; flex-direction: column; gap: 4px; align-items: center; text-align: center; }
+.price { font-size: 1.8rem; font-weight: 800; color: var(--color-primary); }
+
+.barcodeWrapper { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+
+.barcode {
+  height: 50px;
+  width: 100%;
+  background: repeating-linear-gradient(
+    to right,
+    #0F172A,
+    #0F172A 2px,
+    transparent 2px,
+    transparent 4px,
+    #0F172A 4px,
+    #0F172A 5px,
+    transparent 5px,
+    transparent 8px,
+    #0F172A 8px,
+    #0F172A 12px,
+    transparent 12px,
+    transparent 14px
+  );
+}
+.barcodeText { font-family: monospace; font-size: 0.8rem; letter-spacing: 3px; }
+
+
+@media (max-width: 600px) {
+  .ticket {
+    flex-direction: column; 
+  }
+
+  .mainPart {
+    border-right: none; 
+    border-bottom: 2px dashed #CBD5E1;
+  }
+
+  .stubPart {
+    width: 100%; 
+    flex-direction: row; 
+    align-items: center;
+    gap: 16px;
+  }
+
+  .stubInfo {
+    align-items: flex-start; 
+    text-align: left;
+  }
+
+  .barcodeWrapper {
+    flex: 1; 
+  }
+
+  .ticket::before, .ticket::after {
+    right: auto; 
+    transform: translateY(50%); 
+    bottom: 96px; 
+  }
+
+  .ticket::before { left: -15px; } 
+  .ticket::after { right: -15px; } 
+}

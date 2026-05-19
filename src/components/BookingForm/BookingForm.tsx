@@ -5,7 +5,7 @@ import styles from './BookingForm.module.css';
 interface BookingFormProps {
   selectedSeats: Seat[];
   totalPrice: number;
-  onSubmitSuccess: () => void;
+  onSubmitSuccess: (name: string) => void; 
   onCancel: () => void;
 }
 
@@ -41,7 +41,7 @@ export const BookingForm = ({ selectedSeats, totalPrice, onSubmitSuccess, onCanc
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     if (validate()) {
-      onSubmitSuccess(); 
+      onSubmitSuccess(formData.name); 
     }
   };
 

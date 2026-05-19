@@ -4,7 +4,7 @@ import styles from './TrainList.module.css';
 
 interface TrainListProps {
   trains: Train[];
-  onSelectTrain: (trainNumber: string) => void; // ДОДАНО
+  onSelectTrain: (trainNumber: string) => void; 
 }
 
 export const TrainList = ({ trains, onSelectTrain }: TrainListProps) => {
