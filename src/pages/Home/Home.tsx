@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { TrainList } from '../../components/TrainList/TrainList';
 import { SearchFilter } from '../../components/shared/SearchFilter/SearchFilter';
+import { Booking } from '../Booking.tsx/Booking';
 import { AnimatedTrainTrack } from '../../components/shared/AnimatedTrainTrack/AnimatedTrainTrack';
 import { mockTrains } from '../../data/train';
 import styles from './Home.module.css';
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useState({ from: '', to: '', date: '' });
+  // НОВИЙ СТАН: зберігаємо номер вибраного потяга (null, якщо нічого не вибрано)
+  const [selectedTrainNumber, setSelectedTrainNumber] = useState<string | null>(null);
 
   const handleSearch = (from: string, to: string, date: string) => {
     setSearchParams({ from, to, date });
@@ -42,8 +45,18 @@ export const Home = () => {
 
       <section className={styles.resultsSection}>
         <h2 className={styles.sectionTitle}>Доступні рейси</h2>
-        <TrainList trains={filteredTrains} />
+        <TrainList 
+          trains={filteredTrains} 
+          onSelectTrain={(trainNumber) => setSelectedTrainNumber(trainNumber)} 
+        />
       </section>
+
+      {selectedTrainNumber && (
+        <Booking 
+          trainNumber={selectedTrainNumber} 
+          onClose={() => setSelectedTrainNumber(null)} 
+        />
+      )}
     </div>
   );
 };

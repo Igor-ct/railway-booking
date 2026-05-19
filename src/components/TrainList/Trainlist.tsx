@@ -4,9 +4,10 @@ import styles from './TrainList.module.css';
 
 interface TrainListProps {
   trains: Train[];
+  onSelectTrain: (trainNumber: string) => void; // ДОДАНО
 }
 
-export const TrainList = ({ trains }: TrainListProps) => {
+export const TrainList = ({ trains, onSelectTrain }: TrainListProps) => {
   if (trains.length === 0) {
     return <div className={styles.emptyState}>Рейсів не знайдено</div>;
   }
@@ -14,8 +15,12 @@ export const TrainList = ({ trains }: TrainListProps) => {
   return (
     <div className={styles.list}>
       {trains.map((train) => (
-        <TrainCard key={train.id} train={train} />
+        <TrainCard 
+          key={train.id} 
+          train={train} 
+          onSelectTrain={onSelectTrain} 
+        />
       ))}
     </div>
   );
-}
+};

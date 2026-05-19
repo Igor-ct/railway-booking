@@ -1,0 +1,91 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  backdrop-filter: blur(4px);
+}
+
+.bookingContainer {
+  background-color: var(--color-white);
+  width: 95%;
+  max-width: 1200px;
+  height: 90vh;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(50px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.header {
+  padding: 20px 30px;
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header h2 { margin: 0; }
+
+.closeButton {
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+.closeButton:hover { background: rgba(255, 255, 255, 0.3); }
+
+.content {
+  padding: 30px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
+.wagonTabs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.tab, .activeTab {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 1px solid var(--color-primary);
+  cursor: pointer;
+  font-weight: 600;
+  background: white;
+  color: var(--color-primary);
+}
+
+.activeTab {
+  background: var(--color-primary);
+  color: white;
+}
+
+.tempSeatsList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 15px;
+}

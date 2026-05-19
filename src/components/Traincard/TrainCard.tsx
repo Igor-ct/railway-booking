@@ -3,9 +3,10 @@ import styles from './TrainCard.module.css';
 
 interface TrainCardProps {
   train: Train;
+  onSelectTrain: (trainNumber: string) => void;
 }
 
-export const TrainCard = ({ train }: TrainCardProps) => {
+export const TrainCard = ({ train, onSelectTrain }: TrainCardProps) => {
   const formatTime = (isoString: string) => {
     const date = new Date(isoString);
     return date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
@@ -47,7 +48,12 @@ export const TrainCard = ({ train }: TrainCardProps) => {
       </div>
       
       <div className={styles.cardFooter}>
-        <button className={styles.selectButton}>Вибрати місця</button>
+        <button 
+          className={styles.selectButton}
+          onClick={() => onSelectTrain(train.number)}
+        >
+          Вибрати місця
+        </button>
       </div>
     </div>
   );
