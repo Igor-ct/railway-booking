@@ -15,8 +15,8 @@ export const mockTrains: Train[] = [
     number: '091К',
     type: 'Нічний експрес',
     route: { from: 'Київ', to: 'Львів' },
-    departureTime: '2026-05-15T22:37:00',
-    arrivalTime: '2026-05-16T06:26:00',
+    departureTime: '2026-05-16T22:37:00',
+    arrivalTime: '2026-05-18T06:26:00',
     duration: '7 год 49 хв',
   },
   {
