@@ -11,6 +11,15 @@ export const TrainCard = ({ train }: TrainCardProps) => {
     return date.toLocaleTimeString('uk-UA', { hour: '2-digit', minute: '2-digit' });
   };
 
+  const formatDetailedDate = (isoString: string) => {
+    const date = new Date(isoString);
+    return date.toLocaleDateString('uk-UA', { 
+      weekday: 'short', 
+      day: 'numeric', 
+      month: 'long' 
+    });
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.cardHeader}>
@@ -21,6 +30,7 @@ export const TrainCard = ({ train }: TrainCardProps) => {
       <div className={styles.routeInfo}>
         <div className={styles.cityInfo}>
           <span className={styles.time}>{formatTime(train.departureTime)}</span>
+          <span className={styles.detailedDate}>{formatDetailedDate(train.departureTime)}</span>
           <span className={styles.city}>{train.route.from}</span>
         </div>
         
@@ -31,6 +41,7 @@ export const TrainCard = ({ train }: TrainCardProps) => {
         
         <div className={styles.cityInfo}>
           <span className={styles.time}>{formatTime(train.arrivalTime)}</span>
+          <span className={styles.detailedDate}>{formatDetailedDate(train.arrivalTime)}</span>
           <span className={styles.city}>{train.route.to}</span>
         </div>
       </div>
