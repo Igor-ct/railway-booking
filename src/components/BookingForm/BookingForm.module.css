@@ -91,3 +91,48 @@
 }
 
 .submitButton:hover { background: var(--color-primary-dark); }
+
+.phoneInputWrapper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--color-gray);
+  border-radius: 8px;
+  background: white;
+  transition: all 0.2s;
+  overflow: hidden;
+  padding: 0 12px;
+}
+
+.phoneInputWrapper:focus-within {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.1);
+}
+
+.phoneInputWrapper.inputError {
+  border-color: var(--color-error) !important;
+}
+
+.phoneInputWrapper.inputError:focus-within {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+}
+
+.phonePrefix {
+  color: var(--color-gray-dark);
+  font-weight: 600;
+  margin-right: 8px;
+  user-select: none;
+}
+
+.phoneInputField {
+  flex: 1;
+  padding: 12px 0; 
+  border: none !important; 
+  outline: none;
+  font-size: 1rem;
+  background: transparent;
+  color: #111827;
+}
+
+.phoneInputField:focus {
+  box-shadow: none !important; 
+}
