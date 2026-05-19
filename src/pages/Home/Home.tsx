@@ -8,7 +8,6 @@ import styles from './Home.module.css';
 
 export const Home = () => {
   const [searchParams, setSearchParams] = useState({ from: '', to: '', date: '' });
-  // НОВИЙ СТАН: зберігаємо номер вибраного потяга (null, якщо нічого не вибрано)
   const [selectedTrainNumber, setSelectedTrainNumber] = useState<string | null>(null);
 
   const handleSearch = (from: string, to: string, date: string) => {
