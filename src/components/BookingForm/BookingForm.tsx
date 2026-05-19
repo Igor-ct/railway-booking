@@ -5,13 +5,33 @@ import styles from './BookingForm.module.css';
 interface BookingFormProps {
   selectedSeats: Seat[];
   totalPrice: number;
-  onSubmitSuccess: (name: string) => void; 
+  onSubmitSuccess: (name: string) => void;
   onCancel: () => void;
 }
 
 export const BookingForm = ({ selectedSeats, totalPrice, onSubmitSuccess, onCancel }: BookingFormProps) => {
   const [formData, setFormData] = useState({ name: '', phone: '', email: '' });
   const [errors, setErrors] = useState({ name: '', phone: '', email: '' });
+
+  const handlePhoneChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let digits = e.target.value.replace(/\D/g, '');
+
+    if (digits.startsWith('380')) {
+      digits = digits.substring(3);
+    } else if (digits.startsWith('0')) {
+      digits = digits.substring(1);
+    }
+
+    digits = digits.substring(0, 9);
+
+    let formatted = '';
+    if (digits.length > 0) formatted += digits.substring(0, 2);
+    if (digits.length > 2) formatted += ' ' + digits.substring(2, 5);
+    if (digits.length > 5) formatted += ' ' + digits.substring(5, 7);
+    if (digits.length > 7) formatted += ' ' + digits.substring(7, 9);
+
+    setFormData({ ...formData, phone: formatted });
+  };
 
   const validate = () => {
     let isValid = true;
@@ -22,9 +42,9 @@ export const BookingForm = ({ selectedSeats, totalPrice, onSubmitSuccess, onCanc
       isValid = false;
     }
     
-    const phoneRegex = /^(\+380|0)\d{9}$/;
-    if (!phoneRegex.test(formData.phone.replace(/\s+/g, ''))) {
-      newErrors.phone = "Введіть коректний номер (напр. 0501234567)";
+    const phoneDigits = formData.phone.replace(/\D/g, '');
+    if (phoneDigits.length !== 9) {
+      newErrors.phone = "Введіть номер повністю (9 цифр)";
       isValid = false;
     }
 
@@ -66,13 +86,16 @@ export const BookingForm = ({ selectedSeats, totalPrice, onSubmitSuccess, onCanc
 
       <div className={styles.inputGroup}>
         <label>Номер телефону</label>
-        <input 
-          type="tel" 
-          placeholder="+380 50 123 45 67"
-          className={errors.phone ? styles.inputError : ''}
-          value={formData.phone}
-          onChange={(e) => setFormData({...formData, phone: e.target.value})}
-        />
+        <div className={`${styles.phoneInputWrapper} ${errors.phone ? styles.inputError : ''}`}>
+          <span className={styles.phonePrefix}>+380</span>
+          <input 
+            type="tel" 
+            placeholder="50 123 45 67"
+            className={styles.phoneInputField}
+            value={formData.phone}
+            onChange={handlePhoneChange}
+          />
+        </div>
         {errors.phone && <span className={styles.errorText}>{errors.phone}</span>}
       </div>
 
