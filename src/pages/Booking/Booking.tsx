@@ -1,29 +1,44 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { generateTrainWagons } from '../../data/wagons';
-import { SeatMap } from '../../components/SeatMap/SeatMap'; 
-import type { Seat } from '../../types/booking';
+import { SeatMap } from '../../components/SeatMap/SeatMap';
 import { BookingForm } from '../../components/BookingForm/BookingForm';
+import { Ticket } from '../../components/Ticket/Ticket';
+import { useBookingContext } from '../../context/BookingContext'; 
+import { toast } from 'react-toastify';
+import type { Seat } from '../../types/booking';
 import styles from './Booking.module.css';
 
-interface BookingProps {
-  trainNumber: string;
-  onClose: () => void;
-}
+type BookingStep = 'SELECT_SEATS' | 'CHECKOUT' | 'TICKET';
 
-type BookingStep = 'SELECT_SEATS' | 'CHECKOUT';
+export const Booking = () => {
+  const { trainNumber } = useParams<{ trainNumber: string }>();
+  const navigate = useNavigate();
+  
+  const { isSeatPurchased, addPurchasedTickets } = useBookingContext();
 
-export const Booking = ({ trainNumber, onClose }: BookingProps) => {
   const [wagons] = useState(() => generateTrainWagons(400));
   const [selectedWagon, setSelectedWagon] = useState(wagons[0]);
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
-  
   const [currentStep, setCurrentStep] = useState<BookingStep>('SELECT_SEATS');
+  const [passengerName, setPassengerName] = useState<string>('');
+
+  useEffect(() => {
+    if (!trainNumber) navigate('/');
+  }, [trainNumber, navigate]);
+
+  const wagonWithOccupiedSeats = {
+    ...selectedWagon,
+    seats: selectedWagon.seats.map(seat => ({
+      ...seat,
+      isAvailable: seat.isAvailable && !isSeatPurchased(trainNumber || '', selectedWagon.number, seat.id)
+    }))
+  };
 
   const handleToggleSeat = (seat: Seat) => {
+    if (!seat.isAvailable) return; 
     setSelectedSeats((prev) => {
-      if (prev.find((s) => s.id === seat.id)) {
-        return prev.filter((s) => s.id !== seat.id);
-      }
+      if (prev.find((s) => s.id === seat.id)) return prev.filter((s) => s.id !== seat.id);
       return [...prev, seat];
     });
   };
@@ -35,10 +50,20 @@ export const Booking = ({ trainNumber, onClose }: BookingProps) => {
     setSelectedSeats([]); 
   };
 
-  const handleBookingSuccess = () => {
-    alert(`Успіх! Квитки відправлено на ваш email. Сума: ${totalPrice} грн.`);
-    onClose();
+  const handleBookingSuccess = (name: string) => {
+    setPassengerName(name);
+    if (trainNumber) {
+      addPurchasedTickets(trainNumber, selectedWagon.number, selectedSeats);
+    }
+    setCurrentStep('TICKET'); 
+    toast.success('Бронювання успішне! Ваші квитки готові.');
   };
+
+  const handleClose = () => {
+    navigate('/');
+  };
+
+  if (!trainNumber) return null;
 
   return (
     <div className={styles.overlay}>
@@ -48,7 +73,7 @@ export const Booking = ({ trainNumber, onClose }: BookingProps) => {
           <h2>
             Потяг {trainNumber}: {currentStep === 'SELECT_SEATS' ? 'Вибір місць' : 'Оформлення квитків'}
           </h2>
-          <button className={styles.closeButton} onClick={onClose}>✕ Закрити</button>
+          <button className={styles.closeButton} onClick={handleClose}>✕ Закрити</button>
         </div>
 
         <div className={styles.content}>
@@ -73,7 +98,7 @@ export const Booking = ({ trainNumber, onClose }: BookingProps) => {
               <div>
                 <h3>Виберіть місця (Вагон {selectedWagon.number})</h3>
                 <SeatMap 
-                  wagon={selectedWagon} 
+                  wagon={wagonWithOccupiedSeats} 
                   selectedSeats={selectedSeats} 
                   onToggleSeat={handleToggleSeat} 
                 />
@@ -102,9 +127,30 @@ export const Booking = ({ trainNumber, onClose }: BookingProps) => {
               <BookingForm 
                 selectedSeats={selectedSeats}
                 totalPrice={totalPrice}
-                onCancel={() => setCurrentStep('SELECT_SEATS')} // Повертає назад до місць
-                onSubmitSuccess={handleBookingSuccess} // Викликає фінальний успіх
+                onCancel={() => setCurrentStep('SELECT_SEATS')}
+                onSubmitSuccess={handleBookingSuccess} 
               />
+            </div>
+          )}
+
+          {currentStep === 'TICKET' && (
+            <div className={styles.checkoutWrapper}>
+              <h3 style={{ textAlign: 'center', color: 'var(--color-success)', marginBottom: '20px' }}>
+                🎉 Оплата пройшла успішно!
+              </h3>
+              <Ticket 
+                trainNumber={trainNumber}
+                passengerName={passengerName}
+                selectedSeats={selectedSeats}
+                totalPrice={totalPrice}
+              />
+              <button 
+                className={styles.continueButton} 
+                style={{ width: '100%', marginTop: '20px' }}
+                onClick={handleClose}
+              >
+                Повернутися на головну
+              </button>
             </div>
           )}
 

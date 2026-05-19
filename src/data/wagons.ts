@@ -1,4 +1,3 @@
-
 import type { Seat, SeatType, Wagon, WagonClass } from '../types/booking';
 
 const CLASS_MULTIPLIER: Record<WagonClass, number> = {
@@ -30,13 +29,11 @@ const generateSeats = (count: number, basePrice: number, wagonClass: WagonClass)
     const seatModifier = SEAT_MODIFIERS[type];
     const finalPrice = Math.round(basePrice * classMultiplier * seatModifier);
 
-    const isAvailable = Math.random() > 0.3;
-
     seats.push({
       id: `seat-${i}`,
       number: i,
       type,
-      isAvailable,
+      isAvailable: true, 
       price: finalPrice,
     });
   }
