@@ -23,7 +23,7 @@ const generateSeats = (count: number, basePrice: number, wagonClass: WagonClass)
     
     if (i >= count - 1) type = 'Біля туалету';
     else if (i <= 2) type = 'Біля виходу';
-    else if (i % 2 !== 0) type = 'Біля вікна';
+    else if (i % 4 === 1 || i % 4 === 0) type = 'Біля вікна';
 
     const classMultiplier = CLASS_MULTIPLIER[wagonClass];
     const seatModifier = SEAT_MODIFIERS[type];
@@ -33,7 +33,7 @@ const generateSeats = (count: number, basePrice: number, wagonClass: WagonClass)
       id: `seat-${i}`,
       number: i,
       type,
-      isAvailable: true, 
+      isAvailable: true,
       price: finalPrice,
     });
   }

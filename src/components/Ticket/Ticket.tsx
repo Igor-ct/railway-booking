@@ -3,22 +3,26 @@ import styles from './Ticket.module.css';
 
 interface TicketProps {
   trainNumber: string;
+  wagonNumber: number;
+  trainType?: string; 
   passengerName: string;
   selectedSeats: Seat[];
   totalPrice: number;
 }
 
-export const Ticket = ({ trainNumber, passengerName, selectedSeats, totalPrice }: TicketProps) => {
+export const Ticket = ({ trainNumber, wagonNumber, trainType, passengerName, selectedSeats, totalPrice }: TicketProps) => {
   const ticketId = Math.random().toString(36).substring(2, 10).toUpperCase();
   const date = new Date().toLocaleDateString('uk-UA');
 
   return (
     <div className={styles.ticketWrapper}>
       <div className={styles.ticket}>
-        
+
         <div className={styles.mainPart}>
           <div className={styles.header}>
-            <span className={styles.trainBrand}>УКРЗАЛІЗНИЦЯ • ІНТЕРСІТІ+</span>
+            <span className={styles.trainBrand}>
+              УКРЗАЛІЗНИЦЯ {trainType ? `• ${trainType.toUpperCase()}` : ''}
+            </span>
             <span className={styles.ticketId}>#{ticketId}</span>
           </div>
           
@@ -32,7 +36,11 @@ export const Ticket = ({ trainNumber, passengerName, selectedSeats, totalPrice }
               <span className={styles.value}>{trainNumber}</span>
             </div>
             <div className={styles.block}>
-              <span className={styles.label}>Дата оформлення</span>
+              <span className={styles.label}>Вагон</span>
+              <span className={styles.value}>№{wagonNumber}</span>
+            </div>
+            <div className={styles.block}>
+              <span className={styles.label}>Дата</span>
               <span className={styles.value}>{date}</span>
             </div>
           </div>
@@ -54,7 +62,7 @@ export const Ticket = ({ trainNumber, passengerName, selectedSeats, totalPrice }
             <span className={styles.label}>До сплати</span>
             <span className={styles.price}>{totalPrice} ₴</span>
           </div>
-          
+
           <div className={styles.barcodeWrapper}>
             <div className={styles.barcode}></div>
             <span className={styles.barcodeText}>{ticketId}</span>

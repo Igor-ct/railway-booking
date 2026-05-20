@@ -7,6 +7,7 @@ import { Ticket } from '../../components/Ticket/Ticket';
 import { useBookingContext } from '../../context/BookingContext'; 
 import { toast } from 'react-toastify';
 import type { Seat } from '../../types/booking';
+import { mockTrains } from '../../data/train';
 import styles from './Booking.module.css';
 
 type BookingStep = 'SELECT_SEATS' | 'CHECKOUT' | 'TICKET';
@@ -22,6 +23,7 @@ export const Booking = () => {
   const [selectedSeats, setSelectedSeats] = useState<Seat[]>([]);
   const [currentStep, setCurrentStep] = useState<BookingStep>('SELECT_SEATS');
   const [passengerName, setPassengerName] = useState<string>('');
+  const currentTrain = mockTrains.find(t => t.number === trainNumber);
 
   useEffect(() => {
     if (!trainNumber) navigate('/');
@@ -140,6 +142,8 @@ export const Booking = () => {
               </h3>
               <Ticket 
                 trainNumber={trainNumber}
+                wagonNumber={selectedWagon.number} 
+                trainType={currentTrain?.type || 'ПАСАЖИРСЬКИЙ'}
                 passengerName={passengerName}
                 selectedSeats={selectedSeats}
                 totalPrice={totalPrice}
